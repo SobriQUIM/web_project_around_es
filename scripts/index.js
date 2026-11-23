@@ -1,30 +1,44 @@
-const initialCards = [
-  {
-    name: "Valle de Yosemite",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg",
-  },
-  {
-    name: "Lago Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg",
-  },
-  {
-    name: "Montañas Calvas",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_bald-mountains.jpg",
-  },
-  {
-    name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_latemar.jpg",
-  },
-  {
-    name: "Parque Nacional de la Vanoise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_vanoise.jpg",
-  },
-  {
-    name: "Lago di Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg",
-  },
-];
+// 1. Selección de elementos del DOM
+const editButton = document.querySelector(".profile__edit-button");
+const editPopup = document.querySelector("#edit-popup");
+const closeButton = editPopup.querySelector(".popup__close");
 
-initialCards.forEach(function (card) {
-  console.log(card.name);
-});
+function openModal(modal) {
+  modal.classList.add("popup_is-opened");
+}
+
+function closeModal(modal) {
+  modal.classList.remove("popup_is-opened");
+}
+
+//2. Rellenar el formulario
+const nameInput = document.querySelector(".popup__input_type_name");
+const jobInput = document.querySelector(".popup__input_type_description");
+const profileTitle = document.querySelector(".profile__title");
+const profileDescription = document.querySelector(".profile__description");
+
+function fillProfileForm() {
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileDescription.textContent;
+}
+
+function handleOpenEditModal() {
+  fillProfileForm();
+  openModal(editPopup);
+}
+
+//3. Enviar el formulario
+const formElement = document.querySelector("#edit-profile-form");
+
+function handleProfileFormSubmit(evt) {
+  evt.preventDefault();
+
+  profileTitle.textContent = nameInput.value;
+  profileDescription.textContent = jobInput.value;
+
+  closeModal(editPopup);
+}
+
+editButton.addEventListener("click", handleOpenEditModal);
+closeButton.addEventListener("click", () => closeModal(editPopup));
+formElement.addEventListener("submit", handleProfileFormSubmit);
